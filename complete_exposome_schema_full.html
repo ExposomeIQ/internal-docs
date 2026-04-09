@@ -1,0 +1,852 @@
+
+<h2 class="sr-only">Complete Exposome Schema — all four domains: Chemical (xenobiotics A–N and endobiotics A–I), Biological (pathogens, microbiome, allergens, biotoxins), Psychosocial (A–G), and Physical (A–F) with full subclasses and mechanisms</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.er{padding:10px 0 28px;font-family:var(--font-sans)}
+.top{background:#0C2340;border-radius:8px;padding:12px 20px 10px;margin-bottom:12px;text-align:center}
+.top-t{font-size:19px;font-weight:500;color:#fff;letter-spacing:.01em}
+.top-s{font-size:11px;color:#85B7EB;margin-top:3px}
+.top-pills{display:flex;gap:6px;justify-content:center;margin-top:7px;flex-wrap:wrap}
+.tp{font-size:10px;font-weight:500;padding:2px 10px;border-radius:10px;color:#fff}
+.tp-c{background:#185FA5}.tp-b{background:#3B6D11}.tp-ps{background:#534AB7}.tp-ph{background:#854F0B}
+@media(prefers-color-scheme:dark){.top{background:#0a1929}}
+.tab-bar{display:none;gap:4px;margin-bottom:12px;flex-wrap:wrap}
+.tab-btn{padding:6px 16px;border-radius:6px;font-size:12px;font-weight:500;border:1px solid var(--color-border-secondary);color:var(--color-text-secondary);background:var(--color-background-secondary);cursor:pointer;transition:all .15s;font-family:var(--font-sans)}
+.tab-btn:hover{border-color:var(--color-border-primary)}
+.tab-btn.active{color:#fff;border-color:transparent}
+.tab-btn[data-target=chem].active{background:#185FA5}
+.tab-btn[data-target=bio].active{background:#3B6D11}
+.tab-btn[data-target=psych].active{background:#534AB7}
+.tab-btn[data-target=phys].active{background:#854F0B}
+.ds{margin-bottom:16px}
+.dh{border-radius:6px;padding:7px 12px;margin-bottom:10px;font-size:13px;font-weight:500;border-left:3px solid}
+.dh-c{background:#E6F1FB;color:#0C447C;border-color:#185FA5}
+.dh-b{background:#EAF3DE;color:#27500A;border-color:#3B6D11}
+.dh-ps{background:#EEEDFE;color:#3C3489;border-color:#534AB7}
+.dh-ph{background:#FAEEDA;color:#633806;border-color:#854F0B}
+@media(prefers-color-scheme:dark){
+  .dh-c{background:#042C53;color:#B5D4F4;border-color:#378ADD}
+  .dh-b{background:#173404;color:#C0DD97;border-color:#639922}
+  .dh-ps{background:#26215C;color:#CECBF6;border-color:#7F77DD}
+  .dh-ph{background:#412402;color:#FAC775;border-color:#BA7517}
+}
+.sdh{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);padding:2px 0 5px;border-bottom:1px solid var(--color-border-tertiary);margin-bottom:8px}
+.intro{font-size:11px;color:var(--color-text-secondary);font-style:italic;margin-bottom:8px;line-height:1.5}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:9px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:9px}
+.gfull{grid-column:1/-1}
+.cc{border:1px solid var(--color-border-tertiary);border-radius:6px;overflow:hidden;background:var(--color-background-primary)}
+.ch{padding:5px 7px;display:flex;align-items:center;gap:5px}
+.cl{font-size:9px;font-weight:500;min-width:18px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:0 3px;flex-shrink:0}
+.cn{font-size:11px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.cb{padding:5px 7px 7px}
+.ci{font-size:11px;font-weight:500;color:var(--color-text-primary);display:flex;gap:4px;margin-top:3px;margin-bottom:1px;align-items:flex-start;line-height:1.4}
+.ci::before{content:'▸';font-size:8px;color:var(--color-text-tertiary);flex-shrink:0;margin-top:2px}
+.cd{font-size:11px;color:var(--color-text-secondary);padding-left:12px;line-height:1.4;margin-bottom:1px}
+.cm{font-size:11px;color:var(--color-text-tertiary);font-style:italic;padding-left:12px;line-height:1.35;margin-bottom:2px}
+.dv{height:1px;background:var(--color-border-tertiary);margin:4px 0}
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.ig3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.cxh{background:#E6F1FB;border-bottom:1px solid #B5D4F4}
+.cxl{background:#185FA5;color:#fff}
+.ceh{background:#E1F5EE;border-bottom:1px solid #9FE1CB}
+.cel{background:#0F6E56;color:#fff}
+.bph{background:#EAF3DE;border-bottom:1px solid #C0DD97}
+.bpl{background:#3B6D11;color:#fff}
+.bmh{background:#E1F5EE;border-bottom:1px solid #9FE1CB}
+.bml{background:#085041;color:#fff}
+.psh{background:#EEEDFE;border-bottom:1px solid #CECBF6}
+.psl{background:#534AB7;color:#fff}
+.phh{background:#FAEEDA;border-bottom:1px solid #FAC775}
+.phl{background:#854F0B;color:#fff}
+@media(prefers-color-scheme:dark){
+  .cxh{background:#042C53;border-bottom-color:#0C447C}
+  .ceh{background:#04342C;border-bottom-color:#085041}
+  .bph{background:#173404;border-bottom-color:#27500A}
+  .bmh{background:#04342C;border-bottom-color:#085041}
+  .psh{background:#26215C;border-bottom-color:#3C3489}
+  .phh{background:#412402;border-bottom-color:#633806}
+}
+.bdg{font-size:9px;font-weight:500;padding:1px 4px;border-radius:3px;margin-left:3px;white-space:nowrap}
+.br{background:#FCEBEB;color:#A32D2D}.ba{background:#FAEEDA;color:#854F0B}
+.bg{background:#EAF3DE;color:#27500A}.bpu{background:#EEEDFE;color:#3C3489}
+.bt{background:#E1F5EE;color:#0F6E56}
+@media(prefers-color-scheme:dark){
+  .br{background:#501313;color:#F7C1C1}.ba{background:#412402;color:#FAC775}
+  .bg{background:#173404;color:#C0DD97}.bpu{background:#26215C;color:#CECBF6}
+  .bt{background:#04342C;color:#9FE1CB}
+}
+</style>
+
+<div class="tab-bar">
+  <button class="tab-btn active" data-target="chem">Chemical</button>
+  <button class="tab-btn" data-target="bio">Biological</button>
+  <button class="tab-btn" data-target="psych">Psychosocial</button>
+  <button class="tab-btn" data-target="phys">Physical</button>
+</div>
+
+<div class="er">
+<div class="top">
+  <div class="top-t">EXPOSOME</div>
+  <div class="top-s">All non-genetic influences on human health — from conception onward</div>
+  <div class="top-pills">
+    <span class="tp tp-c">Chemical</span>
+    <span class="tp tp-b">Biological</span>
+    <span class="tp tp-ps">Psychosocial</span>
+    <span class="tp tp-ph">Physical</span>
+  </div>
+</div>
+
+<!-- ═══ CHEMICAL ═══ -->
+<div class="ds" data-domain="chem">
+<div class="dh dh-c">Chemical Exposome</div>
+
+<div class="sdh">Xenobiotics — classified by biological effect — 14 categories</div>
+<div class="g3">
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">A</span><span class="cn">Genotoxic</span></div>
+  <div class="cb">
+    <div class="ci">Mutagens</div>
+    <div class="cd">Aflatoxin B1, benzene, ethylene oxide, PAHs (benzo[a]pyrene)</div>
+    <div class="cm">DNA adducts, base-pair substitutions via CYP450 bioactivation</div>
+    <div class="ci">Clastogens</div>
+    <div class="cd">IR byproducts, organochlorines, benzene metabolites</div>
+    <div class="cm">Chromosome strand breakage</div>
+    <div class="ci">Aneugens</div>
+    <div class="cd">Colchicine-like compounds, some pesticides</div>
+    <div class="cm">Spindle disruption → wrong chromosome count in daughter cells</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">B</span><span class="cn">Carcinogenic</span></div>
+  <div class="cb">
+    <div class="ci">Direct-acting</div>
+    <div class="cd">Nitrogen mustards, bis-chloromethyl ether</div>
+    <div class="cm">No metabolic activation required</div>
+    <div class="ci">Procarcinogens</div>
+    <div class="cd">Benzo[a]pyrene, aflatoxin B1, nitrosamines</div>
+    <div class="cm">CYP450 bioactivation → electrophilic reactive intermediates</div>
+    <div class="ci">Tumor promoters <span class="bdg ba">non-genotoxic</span></div>
+    <div class="cd">TCDD/dioxins, phorbol esters, chlorinated HCs, chronic estrogen excess</div>
+    <div class="cm">Clonal expansion, epigenetic change, sustained inflammation</div>
+    <div class="ci">IARC Group 1 (relevant)</div>
+    <div class="cd">Asbestos, benzene, formaldehyde, vinyl chloride, arsenic, cadmium, PCBs, TCDD, aflatoxins, trichloroethylene</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">C</span><span class="cn">Teratogenic / Developmental</span></div>
+  <div class="cb">
+    <div class="ci">Morphological teratogens</div>
+    <div class="cd">Thalidomide, retinoids (high dose), valproic acid, mercury, dioxins</div>
+    <div class="cm">Structural birth defects during critical developmental windows</div>
+    <div class="ci">Functional teratogens</div>
+    <div class="cd">Lead (↓IQ), PCBs (thyroid-dependent neurodevelopment), organophosphates (↓cognition)</div>
+    <div class="cm">Impaired function, no structural change</div>
+    <div class="ci">Growth retardants</div>
+    <div class="cd">Alcohol (fetal alcohol syndrome), nicotine (IUGR via vasoconstriction)</div>
+    <div class="ci">Reproductive toxicants</div>
+    <div class="cd">Phthalates → anti-androgenic → cryptorchidism, hypospadias ("phthalate syndrome")</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">D</span><span class="cn">Endocrine Disrupting (EDCs)</span></div>
+  <div class="cb">
+    <div class="ci">Xenoestrogens <span class="bdg br">ER+</span></div>
+    <div class="cd">BPA, phthalates, PCBs, DDT (o,p'-DDT), atrazine, phytoestrogens (genistein, daidzein)</div>
+    <div class="ci">Xenoandrogens</div>
+    <div class="cd">Agricultural anabolic steroids, tributyltin (TBT)</div>
+    <div class="ci">Anti-androgens</div>
+    <div class="cd">Phthalates (DEHP, DBP), flutamide, vinclozolin, DDE</div>
+    <div class="cm">Suppress Leydig cell testosterone synthesis (StAR, CYP17A1)</div>
+    <div class="ci">Thyroid disruptors</div>
+    <div class="cd">Perchlorate (blocks NIS), PBDEs (compete for transthyretin), PCBs, triclosan</div>
+    <div class="ci">GC/MC disruptors</div>
+    <div class="cd">Organotins, TCDD, PFAS → cortisol/aldosterone pathway</div>
+    <div class="ci">Obesogens <span class="bdg ba">PPARγ</span></div>
+    <div class="cd">TBT, BPA, phthalates, PFAS</div>
+    <div class="cm">PPARγ activation → adipogenesis; altered glucose/lipid metabolism</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">E</span><span class="cn">Neurotoxic</span></div>
+  <div class="cb">
+    <div class="ci">Cholinesterase inhibitors</div>
+    <div class="cd">Organophosphates (chlorpyrifos, parathion, sarin), carbamates</div>
+    <div class="cm">AChE inhibition → ACh accumulation → SLUDGE; chronic → depression, cognitive decline</div>
+    <div class="ci">Ion channel disruptors</div>
+    <div class="cd">Pyrethroids (hold Na+ channels open), DDT</div>
+    <div class="cm">Repetitive neuronal firing</div>
+    <div class="ci">Heavy metal neurotoxins</div>
+    <div class="cd">Lead (NMDA receptor disruption, ↓IQ), methylmercury (Minamata — tubulin, glutathione), manganese (Parkinsonism), aluminum</div>
+    <div class="ci">Excitotoxic / glutamate</div>
+    <div class="cd">Domoic acid, mycotoxins, certain solvents</div>
+    <div class="ci">Axonal / myelinopathic</div>
+    <div class="cd">n-Hexane → 2,5-hexanedione (cross-links axonal proteins), CS2, acrylamide</div>
+    <div class="ci">Volatile organic solvents</div>
+    <div class="cd">Toluene, xylene, benzene → diffuse CNS depression, white matter damage</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">F</span><span class="cn">Hepatotoxic</span></div>
+  <div class="cb">
+    <div class="ci">Direct injury / radical-mediated</div>
+    <div class="cd">CCl4 → CCl3· → lipid peroxidation; chlorinated solvents (TCE, PCE)</div>
+    <div class="ci">Reactive metabolite injury</div>
+    <div class="cd">Acetaminophen → NAPQI → GSH depletion → centrilobular necrosis</div>
+    <div class="ci">Carcinogenic / DNA adduct</div>
+    <div class="cd">Aflatoxin B1 → HCC; vinyl chloride → hepatic angiosarcoma</div>
+    <div class="ci">Steatosis / NAFLD</div>
+    <div class="cd">PFAS, amiodarone (phospholipidosis), alcohol (ethanol)</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">G</span><span class="cn">Nephrotoxic</span></div>
+  <div class="cb">
+    <div class="ci">Tubular toxins</div>
+    <div class="cd">Cadmium (metallothionein accumulation → Fanconi syndrome / itai-itai), mercury, cisplatin</div>
+    <div class="ci">Nephropathy-inducing</div>
+    <div class="cd">Lead nephropathy; aristolochic acid → aristolochic acid nephropathy + urothelial cancer (Balkan endemic)</div>
+    <div class="ci">Mycotoxin nephrotoxins</div>
+    <div class="cd">Ochratoxin A → tubular necrosis + renal carcinogen</div>
+    <div class="ci">Other</div>
+    <div class="cd">Melamine (precipitates in tubules — 2008 milk scandal), PFAS, contrast media</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">H</span><span class="cn">Immunotoxic</span></div>
+  <div class="cb">
+    <div class="ci">Immunosuppressants</div>
+    <div class="cd">TCDD/dioxins (↓T-cells, NK activity), PCBs, PFAS (↓vaccine antibody response in children), benzene (BM → leukopenia)</div>
+    <div class="ci">Immunostimulants / sensitizers</div>
+    <div class="cd">Beryllium (chronic beryllium disease — granulomatous autoimmunity), toluene diisocyanate (occupational asthma), formaldehyde, certain pesticides</div>
+    <div class="cm">Hypersensitivity, autoimmunity, or allergic sensitization mechanisms</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">I</span><span class="cn">Cardiovascular</span></div>
+  <div class="cb">
+    <div class="ci">Functional hypoxia</div>
+    <div class="cd">Carbon monoxide (Hb binding → cardiac hypoxia — leading xenobiotic cause of accidental death)</div>
+    <div class="ci">Hypertensive</div>
+    <div class="cd">Lead (one of most consequential chronic low-level CV xenobiotics); arsenic (QT prolongation, peripheral vascular disease)</div>
+    <div class="ci">Atherogenic / thrombogenic</div>
+    <div class="cd">PFAS (dyslipidemia, hypertension, atherosclerosis); PAHs / PM2.5 (oxidative stress, platelet activation → acute MI)</div>
+    <div class="ci">Other</div>
+    <div class="cd">Dioxins, some organochlorines</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">J</span><span class="cn">Pulmonary</span></div>
+  <div class="cb">
+    <div class="ci">Fibrogenic / carcinogenic</div>
+    <div class="cd">Asbestos (mesothelioma, asbestosis — mechanical + inflammatory), silica (silicosis)</div>
+    <div class="cm">IARC Group 1; irreversible fibrous scarring</div>
+    <div class="ci">Bronchiolitis obliterans</div>
+    <div class="cd">Diacetyl (popcorn lung — butter flavoring); isocyanates (occupational asthma)</div>
+    <div class="ci">Inflammatory</div>
+    <div class="cd">PM2.5, ozone, NO2 → pulmonary inflammation; cadmium fumes, beryllium; PFAS (emerging pulmonary toxicity)</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">K</span><span class="cn">Hematotoxic</span></div>
+  <div class="cb">
+    <div class="ci">Bone marrow toxins</div>
+    <div class="cd">Benzene → aplastic anemia + leukemia via BM destruction and clonal selection</div>
+    <div class="ci">Heme synthesis inhibitors</div>
+    <div class="cd">Lead → inhibits δ-aminolevulinic acid dehydratase → microcytic anemia</div>
+    <div class="ci">Hemolytic</div>
+    <div class="cd">Arsenic → hemolysis</div>
+    <div class="ci">Functional anemia</div>
+    <div class="cd">CO → carboxyhemoglobin; nitrites → methemoglobin (cannot carry O2)</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">L</span><span class="cn">Psychoactive / Behavioral</span></div>
+  <div class="cb">
+    <div class="ci">CNS depressants</div>
+    <div class="cd">Alcohol (GABA potentiation, NMDA inhibition); benzodiazepines</div>
+    <div class="ci">Opioids</div>
+    <div class="cd">Morphine, fentanyl → μ-opioid receptor agonism</div>
+    <div class="ci">Stimulants</div>
+    <div class="cd">Cocaine (dopamine reuptake blockade), amphetamines (DA/NE release)</div>
+    <div class="ci">Psychedelics</div>
+    <div class="cd">LSD, psilocybin (serotonin receptors), THC (CB1 receptor)</div>
+    <div class="ci">Environmental behavioral toxins</div>
+    <div class="cd">Organophosphates (chronic anxiety/depression at sub-acute levels), PCBs (dopaminergic disruption), lead/mercury (cognitive impairment without acute symptoms)</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">M</span><span class="cn">Obesogenic / Metabolic</span></div>
+  <div class="cb">
+    <div class="ci">PPARγ activators</div>
+    <div class="cd">Tributyltin (TBT) — master regulator of fat cell differentiation; coined "obesogens" (Grün &amp; Blumberg, 2006)</div>
+    <div class="ci">Pancreatic / insulin disruptors</div>
+    <div class="cd">BPA → β-cell dysfunction, inappropriate insulin secretion at low concentrations</div>
+    <div class="ci">Thyroid-metabolic disruptors</div>
+    <div class="cd">Phthalates → thyroid disruption → altered basal metabolic rate</div>
+    <div class="ci">Lipid / insulin resistance</div>
+    <div class="cd">PFAS (altered lipid profiles, insulin resistance), atrazine (metabolic syndrome, T2D)</div>
+    <div class="ci">T2D epidemiological links</div>
+    <div class="cd">PCBs, organochlorine pesticides — strong epidemiological correlation with type 2 diabetes</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch cxh"><span class="cl cxl">N</span><span class="cn">Epigenetic</span></div>
+  <div class="cb">
+    <div class="ci">AhR-mediated gene silencing</div>
+    <div class="cd">TCDD/dioxins → AhR → HDAC complexes → immune/metabolic gene loci altered</div>
+    <div class="ci">Imprinted gene methylation</div>
+    <div class="cd">BPA → altered methylation at Igf2/H19 loci during fetal development → permanent metabolic reprogramming</div>
+    <div class="ci">Oncogenic epigenome reprogramming</div>
+    <div class="cd">Arsenic → oncogene hypomethylation + tumor suppressor hypermethylation → cancer-permissive state</div>
+    <div class="ci">Transposon dysregulation</div>
+    <div class="cd">PM2.5 → hypomethylation of LINE-1 repetitive elements</div>
+    <div class="ci">Transgenerational inheritance <span class="bdg br">≥4 gen</span></div>
+    <div class="cd">Vinclozolin (fungicide) → epigenetic program transmitted via male germline for ≥4 generations (Skinner et al., Nature, 2005)</div>
+    <div class="cm">Xenobiotic gone — inherited epigenetic program remains</div>
+  </div>
+</div>
+
+</div>
+
+<div class="sdh" style="margin-top:4px">Endobiotics — body's own chemicals at abnormal levels; xenobiotic-induced dysregulation — 9 categories</div>
+<div class="g3">
+
+<div class="cc">
+  <div class="ch ceh"><span class="cl cel">A</span><span class="cn">Steroid Hormones</span></div>
+  <div class="cb">
+    <div class="cm">Produced from cholesterol; same CYP450 enzymes that xenobiotics exploit</div>
+    <div class="ci">Glucocorticoids (cortisol, cortisone)</div>
+    <div class="cm">Disrupted by: organotins, TCDD, PFAS</div>
+    <div class="ci">Mineralocorticoids (aldosterone)</div>
+    <div class="cm">Disrupted by xenobiotics activating/blocking mineralocorticoid receptor</div>
+    <div class="ci">Estrogens (E2, E1, E3)</div>
+    <div class="cm">Xenoestrogens mimic E2 at ERα/ERβ; atrazine ↑aromatase → endogenous estrogen excess; EDCs alter E2/E1/E3 ratio, suppress SHBG → ↑free estrogen fraction</div>
+    <div class="ci">Androgens (testosterone, DHT, DHEA)</div>
+    <div class="cm">Anti-androgenic phthalates suppress Leydig cell StAR + CYP17A1 → ↓fetal testosterone; vinclozolin metabolites block androgen receptor directly</div>
+    <div class="ci">Progestogens (progesterone)</div>
+    <div class="cm">Disrupted secondarily via estrogen imbalance; some synthetic progestin-like xenobiotics</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch ceh"><span class="cl cel">B</span><span class="cn">Peptide / Protein Hormones</span></div>
+  <div class="cb">
+    <div class="ci">Thyroid hormones (T4, T3)</div>
+    <div class="cm">Perchlorate competes with iodide for NIS → ↓iodine uptake → ↓T4/T3; PBDEs structurally mimic T4, compete for transthyretin; triclosan inhibits deiodinase → impaired T4→T3 conversion</div>
+    <div class="ci">Insulin / glucagon</div>
+    <div class="cm">BPA → β-cell dysfunction + inappropriate secretion; PFAS → insulin resistance; organochlorine pesticides alter GLUT4 and adipokine secretion</div>
+    <div class="ci">Leptin / adiponectin / ghrelin</div>
+    <div class="cm">BPA, phthalates, PFAS alter adipokine secretion; TBT creates excess adipose → dysregulated adipokine output</div>
+    <div class="ci">Growth hormone / IGF-1</div>
+    <div class="cm">Disrupted by TCDD, heavy metals</div>
+    <div class="ci">LH / FSH (pituitary gonadotropins)</div>
+    <div class="cm">EDCs alter hypothalamic GnRH pulsatility; disrupt estrogen/androgen feedback → suppress LH/FSH surges needed for ovulation</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch ceh"><span class="cl cel">C</span><span class="cn">Neurotransmitters</span></div>
+  <div class="cb">
+    <div class="ci">Acetylcholine (ACh)</div>
+    <div class="cm">OPs/carbamates → AChE inhibition → acute SLUDGE syndrome; chronic → depression, cognitive decline</div>
+    <div class="ci">Dopamine</div>
+    <div class="cm">Manganese → basal ganglia depletion → Parkinsonism; lead/mercury → ↓synthesis + receptor density; PCBs → prefrontal dopamine → ↓executive function in children</div>
+    <div class="ci">Serotonin (5-HT)</div>
+    <div class="cm">OPs → ↓receptor expression; PFAS → altered serotonin metabolism; pesticides disrupt gut microbiome → tryptophan pathway disruption</div>
+    <div class="ci">GABA</div>
+    <div class="cm">Organochlorines (endosulfan, lindane) → GABA antagonism → neuronal hyperexcitability → seizures; alcohol chronic → GABA receptor downregulation → withdrawal seizures on cessation</div>
+    <div class="ci">Glutamate / Norepinephrine</div>
+    <div class="cm">Xenobiotic ROS → glutamate-glutamine cycling disruption → excitotoxic neuronal death; heavy metals, OPs, solvents alter NE</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch ceh"><span class="cl cel">D</span><span class="cn">Eicosanoids (Lipid Mediators)</span></div>
+  <div class="cb">
+    <div class="cm">From arachidonic acid via COX and LOX pathways; short-lived local signaling</div>
+    <div class="ci">Prostaglandins (PGE2, PGI2)</div>
+    <div class="cd">PAHs, PM, dioxins, heavy metals → NF-κB → COX-2 upregulation → ↑PGE2</div>
+    <div class="cm">Chronic ↑PGE2 = major mechanism of xenobiotic-driven inflammation + tumor promotion</div>
+    <div class="ci">Thromboxanes (TXA2)</div>
+    <div class="cd">Xenobiotic ROS → prostacyclin/TXA2 imbalance → prothrombotic state</div>
+    <div class="cm">Air pollution PM is well-documented driver of this shift → ↑acute CV events</div>
+    <div class="ci">Leukotrienes (LTB4, cysteinyl LTs)</div>
+    <div class="cd">Xenobiotic ROS → ↑leukotriene synthesis; isocyanates → Th2 shift → asthma leukotriene overproduction</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch ceh"><span class="cl cel">E</span><span class="cn">Reactive Oxygen / Nitrogen Species</span></div>
+  <div class="cb">
+    <div class="cm">Most important class produced directly by xenobiotic exposure; dysregulated from normal signaling into tissue-damaging overproduction</div>
+    <div class="ci">Key species</div>
+    <div class="cd">O2•− (superoxide), H2O2, •OH (hydroxyl), NO, ONOO− (peroxynitrite)</div>
+    <div class="ci">Xenobiotic induction mechanisms</div>
+    <div class="cd">Redox cycling (paraquat, doxorubicin); mitochondrial uncoupling (pentachlorophenol); CYP450 uncoupling; NF-κB → macrophage/neutrophil NADPH oxidase burst</div>
+    <div class="ci">Downstream consequences</div>
+    <div class="cd">Lipid peroxidation → MDA, 4-HNE, isoprostanes (secondary genotoxins + signaling mediators); protein carbonylation; 8-oxodG; oxidized LDL → atherosclerosis</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch ceh"><span class="cl cel">F</span><span class="cn">Cytokines &amp; Immune Mediators</span></div>
+  <div class="cb">
+    <div class="ci">Pro-inflammatory triad</div>
+    <div class="cd">TNF-α, IL-1β, IL-6</div>
+    <div class="cm">Upregulated by dioxins, PAHs, heavy metals, PM, phthalates, BPA via NF-κB → "inflammaging" → insulin resistance, atherosclerosis, cancer progression</div>
+    <div class="ci">Anti-inflammatory (suppressed)</div>
+    <div class="cd">IL-10, TGF-β — immunotoxic xenobiotics suppress these → removes brake on inflammation</div>
+    <div class="ci">Interferons</div>
+    <div class="cd">Altered by dioxins (AhR pathway), PFAS</div>
+    <div class="ci">Net effect</div>
+    <div class="cm">Chronic low-grade systemic cytokine dysregulation = unifying mechanism linking toxic chemical exposure to entire chronic disease spectrum</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch ceh"><span class="cl cel">G</span><span class="cn">Bile Acids</span></div>
+  <div class="cb">
+    <div class="cm">Cholesterol metabolites; FXR/TGR5 nuclear receptor signaling; enterohepatic circulation; gut–brain axis regulators</div>
+    <div class="ci">Xenobiotic displacement</div>
+    <div class="cd">PFAS, PCBs displace bile acids from transporter proteins; inhibit bile acid conjugation enzymes</div>
+    <div class="cm">Disrupts FXR-mediated negative feedback → bile acid accumulation</div>
+    <div class="ci">Cytotoxic secondary bile acid accumulation</div>
+    <div class="cd">Deoxycholic acid (DCA), lithocholic acid (LCA) in colon → act as tumor promoters</div>
+    <div class="ci">Microbiome link</div>
+    <div class="cm">Gut dysbiosis from xenobiotics → altered primary→secondary bile acid conversion → colorectal cancer risk via combined dysbiosis + cytotoxic bile acid exposure</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch ceh"><span class="cl cel">H</span><span class="cn">Endogenous DNA Adducts</span></div>
+  <div class="cb">
+    <div class="cm">Produced from normal metabolism; dramatically amplified by xenobiotic-induced ROS; sit at the xenobiotic/endobiotic boundary</div>
+    <div class="ci">MDA-DNA adducts (M1G)</div>
+    <div class="cm">Malondialdehyde from lipid peroxidation → deoxyguanosine adducts → mutagenic</div>
+    <div class="ci">4-HNE-DNA adducts</div>
+    <div class="cm">4-Hydroxynonenal from LPO; also recognized as a bona fide signaling molecule</div>
+    <div class="ci">8-oxodG</div>
+    <div class="cm">•OH attacks guanine → G→T transversions; most widely used oxidative DNA damage biomarker</div>
+    <div class="ci">Etheno-DNA adducts</div>
+    <div class="cm">1,N6-ethenoadenine, 3,N4-ethenocytosine — from LPO products; dramatically elevated by vinyl chloride and xenobiotic-induced oxidative stress generally</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch ceh"><span class="cl cel">I</span><span class="cn">Epigenetic Marks</span></div>
+  <div class="cb">
+    <div class="cm">Endogenous modifications written/erased by enzymes (DNMTs, HDACs, HATs) that xenobiotics directly alter; can be transgenerationally inherited</div>
+    <div class="ci">DNA methylation (5-mC)</div>
+    <div class="cd">Arsenic: oncogene hypomethylation + TSG hypermethylation → cancer-permissive epigenome</div>
+    <div class="cd">BPA: altered methylation at imprinted genes (Igf2, H19) in fetal development → permanent metabolic reprogramming</div>
+    <div class="ci">Histone modification</div>
+    <div class="cd">TCDD → AhR activation → HDAC complex recruitment → gene cluster silencing</div>
+    <div class="ci">Non-coding RNA</div>
+    <div class="cd">Multiple xenobiotics alter miRNA expression profiles → post-transcriptional gene dysregulation</div>
+    <div class="ci">Transgenerational inheritance <span class="bdg br">≥4 gen</span></div>
+    <div class="cd">Vinclozolin (fungicide) → male germline epigenetic program inherited ≥4 generations (Skinner et al., Nature, 2005)</div>
+    <div class="cm">Bridges to psychosocial domain: ACEs → NR3C1 methylation → ↓GR → sustained HPA activation</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- ═══ BIOLOGICAL ═══ -->
+<div class="ds" data-domain="bio">
+<div class="dh dh-b">Biological Exposome — Pathogens, Microbiome, Allergens, Biotoxins</div>
+
+<div class="sdh">A. Pathogens — 4 classes</div>
+<div class="g2">
+
+<div class="cc">
+  <div class="ch bph"><span class="cl bpl">A1</span><span class="cn">Viruses</span></div>
+  <div class="cb">
+    <div class="ci">Cytopathic</div>
+    <div class="cd">Influenza (airway epithelium lysis), HIV (CD4+ T-cell depletion → AIDS), poliovirus (motor neuron death), HBV/HCV (hepatocyte lysis)</div>
+    <div class="cm">DAMPs release → NF-κB → cytokine storm (TNF-α, IL-6, IL-1β, interferons)</div>
+    <div class="ci">Oncogenic</div>
+    <div class="cd">HPV 16/18 (cervical/oropharyngeal — E6/E7 inactivate p53 + Rb); EBV (Burkitt's lymphoma, NPC); HBV/HCV (HCC via chronic inflammation); HTLV-1 (T-cell leukemia); KSHV/HHV-8 (Kaposi's sarcoma)</div>
+    <div class="ci">Immunosuppressive</div>
+    <div class="cd">HIV (destroys CD4+ helper T cells); measles (immunological amnesia — erases B-cell memory for months post-infection)</div>
+    <div class="ci">Neurotropic</div>
+    <div class="cd">Rabies (retrograde axonal transport → fatal encephalitis); HSV-1 (latent in trigeminal ganglia; associated with Alzheimer's); West Nile (meningitis/encephalitis); SARS-CoV-2 (microglial activation, neuroinflammation, ACE2 neuroinvasion, vascular injury → Long COVID cognitive effects)</div>
+    <div class="ci">Teratogenic</div>
+    <div class="cd">Rubella (cardiac defects, cataracts, deafness, intellectual disability); Zika (microcephaly — infects neural progenitor cells); CMV (most common congenital viral infection → sensorineural hearing loss, cognitive impairment)</div>
+    <div class="ci">Respiratory</div>
+    <div class="cd">SARS-CoV-2, influenza, RSV → pulmonary epithelial damage, endothelial injury, microthrombi, systemic cytokine elevation</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch bph"><span class="cl bpl">A2</span><span class="cn">Bacteria</span></div>
+  <div class="cb">
+    <div class="ci">Toxin-producing — exotoxins</div>
+    <div class="cd">C. botulinum (SNARE cleavage → flaccid paralysis); C. tetani (blocks glycine/GABA → spastic paralysis); V. cholerae (locks Gs protein → massive cAMP → dehydrating diarrhea); S. aureus (superantigens → 20% T-cell activation → toxic shock); C. diphtheriae (ADP-ribosylates EF-2 → ↓protein synthesis → myocarditis)</div>
+    <div class="ci">Endotoxins (LPS)</div>
+    <div class="cd">Gram-negative outer membrane; TLR4 → NF-κB; acute: septic shock; chronic low-level ("metabolic endotoxemia") → obesity, insulin resistance, CVD</div>
+    <div class="ci">Invasive</div>
+    <div class="cd">M. tuberculosis (granuloma, lung destruction, dissemination to any organ); S. pneumoniae (pneumonia, meningitis); T. pallidum (syphilis — tertiary: CV + neurological); L. monocytogenes (crosses BBB and placenta)</div>
+    <div class="ci">Carcinogenic</div>
+    <div class="cd">H. pylori (IARC Group 1 — gastric adenocarcinoma + MALT lymphoma via CagA toxin, chronic inflammation, ↑proliferation/↓apoptosis)</div>
+    <div class="cm">Acute-phase response: ↑CRP, fibrinogen, SAA; fever via PGE2/COX-2; cortisol via HPA axis (sickness behavior)</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch bph"><span class="cl bpl">A3</span><span class="cn">Fungi</span></div>
+  <div class="cb">
+    <div class="ci">Mycotoxin-producing molds</div>
+    <div class="cd">Aspergillus → aflatoxins (IARC 1 — HCC); Fusarium → trichothecenes (protein synthesis inhibition, immunosuppression, GI damage); Alternaria → alternariol (genotoxic); Stachybotrys ("black mold") → satratoxins (respiratory inflammation)</div>
+    <div class="ci">Invasive fungal infections</div>
+    <div class="cd">Candida albicans (systemic candidiasis — biofilm formation, epithelial barrier disruption); A. fumigatus (angioinvasive → necrosis via hyphal vascular invasion); Cryptococcus neoformans (cryptococcal meningitis — polysaccharide capsule inhibits phagocytosis)</div>
+    <div class="cm">Primarily in immunocompromised individuals</div>
+    <div class="ci">Allergenic fungi</div>
+    <div class="cd">Cladosporium, Alternaria, Aspergillus, Penicillium → IgE sensitization → Th2 polarization → allergic rhinitis, asthma</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch bph"><span class="cl bpl">A4</span><span class="cn">Parasites</span></div>
+  <div class="cb">
+    <div class="ci">Protozoa</div>
+    <div class="cd">Plasmodium (malaria — RBC destruction, cerebral malaria via brain microvasculature sequestration; hemozoin → TLR9-mediated inflammation); Toxoplasma gondii (latent brain infection — alters dopaminergic signaling, associated with schizophrenia risk); Trypanosoma (sleeping sickness, Chagas disease — cardiomyopathy, neurodegeneration); Leishmania (granulomatous skin/visceral disease)</div>
+    <div class="ci">Helminths</div>
+    <div class="cd">Drive Th2 polarization (IL-4, IL-5, IL-13, IgE) — protective against autoimmunity (hygiene hypothesis)</div>
+    <div class="cd">Ascaris (intestinal); Schistosoma (IARC Group 1 — hepatic fibrosis; S. haematobium → bladder cancer); Toxocara (ocular/visceral larval migrans); Echinococcus (hydatid cysts — liver/lung)</div>
+  </div>
+</div>
+
+</div>
+
+<div class="sdh">B–D. Microbiome, Allergens &amp; Biotoxins</div>
+<div class="g2">
+
+<div class="cc">
+  <div class="ch bmh"><span class="cl bml">B</span><span class="cn">Microbiome — a distinct sub-exposome</span></div>
+  <div class="cb">
+    <div class="cm">~38 trillion microorganisms; simultaneously an endobiotic factory, barrier, immune educator, and xenobiotic metabolizer</div>
+    <div class="ci">Metabolic — SCFAs</div>
+    <div class="cd">Dietary fiber fermentation → butyrate (colonocyte fuel, gut barrier integrity, HDAC inhibition = epigenetic modulator), propionate, acetate</div>
+    <div class="cm">Dysbiosis → ↓SCFAs → IBD, colorectal cancer, obesity, metabolic syndrome</div>
+    <div class="ci">Immune education</div>
+    <div class="cd">Calibrates Th1/Th2/Th17/Treg balance in early life critical window</div>
+    <div class="cm">Dysbiosis → autoimmune disease (IBD, MS, T1D), allergic disease, ↓vaccine immunogenicity</div>
+    <div class="ci">Gut–brain axis</div>
+    <div class="cd">~90% of body serotonin gut-derived; GABA + dopamine precursors produced by bacteria; vagal signaling via SCFAs</div>
+    <div class="cm">Dysbiosis → depression, anxiety, ASD; Parkinson's (alpha-synuclein aggregation begins in enteric NS); Alzheimer's</div>
+    <div class="ci">Xenobiotic metabolism</div>
+    <div class="cd">Bacteria activate, detoxify, or reactivate liver-conjugated xenobiotics (bidirectional relationship)</div>
+    <div class="cm">Microbiome = both target of xenobiotic damage AND determinant of xenobiotic toxicity</div>
+    <div class="ci">Dysbiosis pathway</div>
+    <div class="cd">Triggers: antibiotics, ultra-processed diet, xenobiotic exposure, psychosocial stress</div>
+    <div class="cm">→ ↑Intestinal permeability → LPS translocation (metabolic endotoxemia) → chronic low-grade systemic inflammation → CVD, neurodegeneration, metabolic disorders</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch bmh"><span class="cl bml">C</span><span class="cn">Allergens &amp; Immune-Provoking Agents</span></div>
+  <div class="cb">
+    <div class="ci">Aeroallergens</div>
+    <div class="cd">Pollen (grass, tree, weed); house dust mite (Der p 1 — serine protease disrupts epithelial tight junctions); mold spores; animal dander</div>
+    <div class="cm">IgE sensitization → mast cell/basophil degranulation → histamine, PGs, LTs → rhinitis, asthma, anaphylaxis</div>
+    <div class="ci">Food allergens</div>
+    <div class="cd">Big 9: peanut (Ara h proteins), shellfish (tropomyosin), milk, egg, wheat, tree nuts, soy, fish, sesame</div>
+    <div class="cm">Type I (immediate IgE-mediated) to Type IV (T-cell mediated — celiac disease via gliadin)</div>
+    <div class="ci">Contact allergens</div>
+    <div class="cd">Nickel, chromate, urushiol (poison ivy)</div>
+    <div class="cm">Type IV delayed-type hypersensitivity — sensitized T cells attack hapten-protein complexes in skin</div>
+    <div class="ci">Insect venoms</div>
+    <div class="cd">Bee/wasp/ant: phospholipase A2, melittin, hyaluronidase</div>
+    <div class="cm">Direct membrane toxicity + IgE-mediated anaphylaxis in sensitized individuals</div>
+  </div>
+</div>
+
+<div class="cc gfull">
+  <div class="ch bmh"><span class="cl bml">D</span><span class="cn">Biotoxins — biological–chemical exposome boundary</span></div>
+  <div class="cb">
+    <div class="ig">
+      <div>
+        <div class="ci">Marine biotoxins</div>
+        <div class="cd">Saxitoxin (paralytic shellfish — blocks voltage-gated Na+ channels → paralysis); domoic acid (amnesic shellfish — glutamate receptor agonist → hippocampal excitotoxicity → memory loss); brevetoxins (neurotoxic shellfish); ciguatoxin (fish — Na+ channel opener → cold allodynia, chronic neurological)</div>
+        <div class="cm">Produced by dinoflagellates/cyanobacteria; human exposure via seafood</div>
+        <div class="ci" style="margin-top:5px">Cyanobacterial toxins</div>
+        <div class="cd">Microcystin (hepatotoxic — inhibits PP1/PP2A; potential IARC carcinogen); cylindrospermopsin (hepatotoxic, genotoxic); anatoxin-a (nicotinic agonist → rapid NM paralysis)</div>
+      </div>
+      <div>
+        <div class="ci">Mycotoxins</div>
+        <div class="cd">Aflatoxins (IARC 1 — HCC); ochratoxin A (nephrotoxic + renal carcinogen); trichothecenes (protein synthesis inhibition); zearalenone (estrogenic); fumonisins; patulin</div>
+        <div class="ci" style="margin-top:5px">Plant biotoxins</div>
+        <div class="cd">Ricin (Ricinus communis — ribosomal protein synthesis inhibition, extreme toxicity); abrin; solanine (Solanum); coniine (hemlock — nicotinic receptor antagonist → paralysis); taxine (yew — cardiac toxicity)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- ═══ PSYCHOSOCIAL ═══ -->
+<div class="ds" data-domain="psych">
+<div class="dh dh-ps">Psychosocial Exposome — Social environment as biological environment</div>
+<div class="intro">Key transduction pathway: HPA axis (CRH → ACTH → cortisol) + SAM system (sympathetic → epinephrine/NE). Concept: allostatic load (McEwen &amp; Stellar, 1993) — cumulative physiological wear from chronic stress response activation.</div>
+
+<div class="g2">
+
+<div class="cc">
+  <div class="ch psh"><span class="cl psl">A</span><span class="cn">Acute Stress Exposures</span></div>
+  <div class="cb">
+    <div class="cm">Short-duration, high-intensity; biological response is adaptive and largely reversible</div>
+    <div class="ci">Psychological threat (danger, fear, performance pressure)</div>
+    <div class="cm">Amygdala → hypothalamus → CRH → pituitary ACTH → adrenal cortisol; simultaneous sympathetic → adrenal medulla → epinephrine/NE</div>
+    <div class="cd">Effects: ↑HR, ↑BP, glucose mobilization, immune activation (initial), coagulation priming, memory consolidation enhancement</div>
+    <div class="ci">Acute trauma / injury</div>
+    <div class="cm">Cortisol spike + massive catecholamine release; inflammatory cascade; substance P + CGRP release (pain signaling)</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch psh"><span class="cl psl">B</span><span class="cn">Chronic Stress Exposures</span></div>
+  <div class="cb">
+    <div class="cm">Sustained activation without recovery — converges on same molecular pathways as toxic chemical exposures</div>
+    <div class="ci">Occupational stress / overload</div>
+    <div class="cd">Chronic cortisol → hippocampal neurogenesis suppression → gray matter loss (MRI-documented); cortisol-induced insulin resistance; CVD via catecholamine-driven arterial inflammation</div>
+    <div class="ci">Poverty / material deprivation</div>
+    <div class="cd">Constant threat-system activation → cortisol dysregulation (elevated → blunted in severe chronic poverty, analogous to receptor downregulation from chronic agonist); ↑CRP, IL-6, TNF-α; shortened telomere length; ↑epigenetic aging rate</div>
+    <div class="ci">Caregiver stress</div>
+    <div class="cd">Documented telomere shortening in primary caregivers — among first demonstrations that psychosocial burden produces measurable biological aging</div>
+    <div class="ci">Discrimination &amp; racism</div>
+    <div class="cd">↑Allostatic load; hypertension → "weathering" hypothesis (accelerated biological aging); ↑cortisol reactivity; ↑inflammatory markers</div>
+    <div class="cm">Now classified as chronic psychosocial stressor with measurable biological embedding</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch psh"><span class="cl psl">C</span><span class="cn">Early Life Adversity — ACEs</span></div>
+  <div class="cb">
+    <div class="cm">Most consequential category — early life = critical developmental plasticity window; exposures permanently biologically embedded; reshape stress response architecture</div>
+    <div class="ci">ACE types</div>
+    <div class="cd">Physical/sexual/emotional abuse; neglect; household violence; parental mental illness, substance abuse, or incarceration; parental separation or death</div>
+    <div class="ci">HPA axis reprogramming</div>
+    <div class="cm">Calibrates cortisol reactivity for life → hyperreactivity (hypervigilance) OR hypoactivity in severe chronic cases (system shutdown). Both patterns confer health risk.</div>
+    <div class="ci">Immune system reprogramming</div>
+    <div class="cm">Elevated adult CRP, IL-6, inflammatory markers persist after controlling for adult health behaviors → permanent immune recalibration, not explained by lifestyle</div>
+    <div class="ci">Epigenetic changes</div>
+    <div class="cd">↑NR3C1 methylation → ↓glucocorticoid receptor expression → ↓cortisol feedback → sustained HPA activation; FKBP5 methylation (PTSD vulnerability gene); BDNF methylation (↓neuroplasticity); telomere shortening</div>
+    <div class="ci">Brain structural changes</div>
+    <div class="cm">↓Hippocampal volume; ↓prefrontal cortex gray matter; ↑amygdala size → threat-detection-biased neurobiological architecture, impaired emotional regulation</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch psh"><span class="cl psl">D</span><span class="cn">Social Isolation &amp; Loneliness</span></div>
+  <div class="cb">
+    <div class="cm">Social isolation/loneliness → +26–29% mortality risk — comparable to smoking 15 cigarettes/day (Holt-Lunstad meta-analyses)</div>
+    <div class="ci">Inflammatory dysregulation — CTRA</div>
+    <div class="cd">Conserved Transcriptional Response to Adversity: ↑IL-1β, IL-6, IL-8, TNF-α; ↓antiviral interferon responses</div>
+    <div class="cm">Evolutionary logic: anticipate bacterial wounds from social conflict. Maladaptive in modern chronic isolation.</div>
+    <div class="ci">HPA / cortisol</div>
+    <div class="cd">↑Basal cortisol, blunted cortisol awakening response → progressive HPA dysregulation</div>
+    <div class="ci">Cardiovascular effects</div>
+    <div class="cd">↑BP, accelerated atherosclerosis, ↑fibrinogen + CRP, higher stroke + CAD risk</div>
+    <div class="ci">Immune suppression</div>
+    <div class="cd">↓NK cell activity; ↓vaccine antibody response; ↓T-cell proliferation → ↑susceptibility to viral infections</div>
+    <div class="ci">Telomere / sleep</div>
+    <div class="cd">Telomere shortening + ↓telomerase; independently predicts poor sleep quality → cascading inflammatory/metabolic dysregulation</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch psh"><span class="cl psl">E</span><span class="cn">Grief, Bereavement &amp; Acute Loss</span></div>
+  <div class="cb">
+    <div class="ci">Takotsubo (stress) cardiomyopathy</div>
+    <div class="cd">Acute psychological shock → massive catecholamine surge → Ca2+ overload → mitochondrial dysfunction → transient severe LV dysfunction mimicking MI</div>
+    <div class="cm">Epinephrine/NE at extreme concentrations = directly cardiomyocyte-toxic</div>
+    <div class="ci">Bereavement systemic effects</div>
+    <div class="cd">↓NK + T-cell activity; ↑cortisol; impaired wound healing; disrupted sleep-wake cycles</div>
+    <div class="ci">Widowhood mortality effect</div>
+    <div class="cd">Dramatically elevated mortality risk in weeks following spousal death; predominantly cardiovascular</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch psh"><span class="cl psl">F</span><span class="cn">PTSD &amp; Chronic Anxiety Disorders</span></div>
+  <div class="cb">
+    <div class="ci">PTSD — biological hallmarks</div>
+    <div class="cd">↓Hippocampal volume; blunted basal cortisol BUT hyperreactive cortisol to triggers; ↑sympathetic tone/NE; altered glucocorticoid receptor sensitivity; ↑inflammatory markers</div>
+    <div class="cm">Failure of fear extinction → amygdala in sustained threat-detection mode → chronically unresolved stress response</div>
+    <div class="ci">Chronic anxiety disorders</div>
+    <div class="cd">Sustained low-level HPA + sympathetic activation → chronically elevated cortisol; suppressed immune function; cardiovascular risk elevation</div>
+  </div>
+</div>
+
+<div class="cc gfull">
+  <div class="ch psh"><span class="cl psl">G</span><span class="cn">Social Determinants as Biological Exposures — "place as biology"</span></div>
+  <div class="cb">
+    <div class="ig3">
+      <div>
+        <div class="ci">Educational attainment</div>
+        <div class="cm">↑Education → ↓allostatic load via multiple pathways: health literacy, income, stress coping capacity, social network quality</div>
+      </div>
+      <div>
+        <div class="ci">Neighborhood quality</div>
+        <div class="cm">Neighborhood-level poverty, violence exposure, and green space access all have measurable biological correlates in resident cortisol levels and inflammatory markers</div>
+      </div>
+      <div>
+        <div class="ci">Food insecurity / housing instability / healthcare access</div>
+        <div class="cm">Chronic threat-state activation; interacts with and amplifies all other psychosocial stressor pathways; structural poverty as chronic biological stressor</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- ═══ PHYSICAL ═══ -->
+<div class="ds" data-domain="phys">
+<div class="dh dh-ph">Physical Exposome — Non-chemical, non-biological environmental forces</div>
+<div class="intro">Act through energy transfer, not molecular binding. Downstream effects converge on same endobiotic responses: ROS generation, DNA damage, inflammation, heat shock protein induction.</div>
+
+<div class="g2">
+
+<div class="cc">
+  <div class="ch phh"><span class="cl phl">A</span><span class="cn">Ionizing Radiation (IR)</span></div>
+  <div class="cb">
+    <div class="ci">Types</div>
+    <div class="cd">Alpha (high damage, low penetrance — dangerous from ingested/inhaled sources: radon, plutonium); Beta; Gamma/X-rays (high penetrance); Neutrons (nuclear reactions)</div>
+    <div class="ci">Sources</div>
+    <div class="cd">Natural background ~50% avg US exposure (cosmic + radon in soil); medical imaging (CT chest = ~7 mSv ≈ 2 yrs background); nuclear medicine; occupational (nuclear, radiology); Chernobyl/Fukushima fallout</div>
+    <div class="ci">Biological mechanisms</div>
+    <div class="cd">Direct: ionizes DNA → double-strand breaks (most dangerous lesion); Indirect: ionizes H2O → •OH → attacks DNA (~60–70% of damage)</div>
+    <div class="ci">Downstream endobiotic effects</div>
+    <div class="cd">DSBs → ATM kinase → p53 → cell cycle arrest or apoptosis; lipid peroxidation → 4-HNE/MDA; NF-κB → inflammation; bystander effect: irradiated cells release ROS + cytokines → damage neighboring unirradiated cells</div>
+    <div class="ci">Health effects</div>
+    <div class="cd">High acute: Acute Radiation Syndrome (BM failure, GI, CNS); chronic low: ↑cancer risk (leukemia, solid tumors); radon = 2nd leading cause of lung cancer; IARC Group 1</div>
+    <div class="ci">Protective biological response</div>
+    <div class="cd">HSPs, antioxidant enzymes (catalase, SOD, GPx), DNA repair pathways (NHEJ, HR)</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch phh"><span class="cl phl">B</span><span class="cn">Non-Ionizing Radiation — 5 subtypes</span></div>
+  <div class="cb">
+    <div class="ci">B1: UV Radiation</div>
+    <div class="cd">UVB: thymine absorption → cyclobutane pyrimidine dimers (CPDs) + 6-4 photoproducts → C→T / CC→TT mutations ("UV signature") → melanoma, SCC, BCC; repaired by NER</div>
+    <div class="cd">UVA: deeper penetration → ROS → 8-oxodG, lipid peroxidation; depletes Langerhans cells → skin immunosuppression</div>
+    <div class="cd">Benefit: UVB → vitamin D3 synthesis from 7-dehydrocholesterol (endobiotic from physical stimulus)</div>
+    <div class="dv"></div>
+    <div class="ci">B2: Infrared (IR)</div>
+    <div class="cd">Thermal tissue effects; protein denaturation at high exposure; chronic near-IR (glassblowers, welders) → ↑cataract risk; photobiomodulation (red light) → stimulates cytochrome c oxidase → ↑ATP, ↓ROS</div>
+    <div class="dv"></div>
+    <div class="ci">B3: Visible light / Blue light / Light at Night (LAN)</div>
+    <div class="cd">Blue light (400–490nm): activates ipRGCs (melanopsin) → ↓melatonin → circadian disruption → sleep suppression, ↑evening cortisol, impaired glucose metabolism, immune dysregulation</div>
+    <div class="cd">LAN/light pollution: ↑breast cancer risk (melatonin suppression — antioxidant + oncostatic); obesity, CVD, neurodegeneration; LAN linked to accelerated MCI→dementia conversion (Filippini 2024)</div>
+    <div class="dv"></div>
+    <div class="ci">B4: RF / Microwave</div>
+    <div class="cd">Mobile phones, WiFi, cell towers, radar; IARC 2B (glioma — 2011, contested, under revision)</div>
+    <div class="cm">Non-ionizing → cannot break bonds; proposed: thermal effects (high exposure); non-thermal via voltage-gated Ca2+ channels; ↑mitochondrial ROS; circadian disruption via melatonin</div>
+    <div class="dv"></div>
+    <div class="ci">B5: ELF-EMF (power lines, appliances)</div>
+    <div class="cd">IARC 2B (childhood leukemia — epidemiological association at ≥0.3–0.4 µT)</div>
+    <div class="cm">Mechanism not established; proposed: melatonin suppression, free radical pair reactions</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch phh"><span class="cl phl">C</span><span class="cn">Noise / Acoustic Exposure</span></div>
+  <div class="cb">
+    <div class="cm">WHO: 2nd largest environmental health hazard in Europe after air pollution</div>
+    <div class="ci">Auditory effects</div>
+    <div class="cd">Cochlear hair cell damage via mechanical trauma + ROS → glutamate excitotoxicity at auditory synapse → sensorineural hearing loss</div>
+    <div class="cm">Occupational threshold typically &gt;85 dB(A) averaged over 8hr</div>
+    <div class="ci">Cardiovascular (non-auditory)</div>
+    <div class="cd">Nighttime noise even below consciousness threshold → sympathetic activation → cortisol + catecholamine release → nocturnal BP elevation → ↑MI, stroke risk</div>
+    <div class="cm">Hyena Study (2017, Berlin-Tegel): nighttime aircraft noise → ↑urinary NE + adrenaline → ↑CV events</div>
+    <div class="ci">Cognitive effects</div>
+    <div class="cd">Children near airports/motorways: impaired learning, memory consolidation (disrupted slow-wave sleep), executive function deficits</div>
+    <div class="cm">Mediated by: sleep disruption, cortisol elevation, direct attentional interference during learning</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch phh"><span class="cl phl">D</span><span class="cn">Temperature Extremes</span></div>
+  <div class="cb">
+    <div class="ci">Heat stress</div>
+    <div class="cd">HSF1 activation → heat shock proteins (HSP70, HSP90, HSP27 — molecular chaperones); sustained heat → vasodilation → ↓preload → cardiac output strain; electrolyte loss → hyponatremia, rhabdomyolysis</div>
+    <div class="cd">Heat stroke (&gt;40°C core): endothelial damage, cytokine storm, coagulopathy, multi-organ failure</div>
+    <div class="cm">27-country analysis (Alahmad et al., Circulation 2023): extreme heat → substantial excess CV mortality; climate change ↑risk</div>
+    <div class="ci">Cold exposure</div>
+    <div class="cd">Sympathetic vasoconstriction → ↑peripheral vascular resistance → ↑BP; ↑blood viscosity + platelet aggregation → prothrombotic (higher MI/stroke in cold months)</div>
+    <div class="cd">Severe hypothermia (&lt;35°C): ventricular fibrillation, coagulopathy, immune suppression</div>
+    <div class="ci">HSPs as exposome-induced endobiotics</div>
+    <div class="cm">Extracellular HSPs released from stressed cells recognized by TLRs → inflammatory response → links thermal stress to atherosclerosis pathogenesis</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch phh"><span class="cl phl">E</span><span class="cn">Hypoxia / Altitude / Pressure</span></div>
+  <div class="cb">
+    <div class="ci">HIF-1α pathway — master response</div>
+    <div class="cd">HIF-1α activated when cellular O2 drops → transcribes: EPO (↑RBC production), VEGF (angiogenesis), glycolytic enzymes (→ anaerobic metabolism), GLUT transporters</div>
+    <div class="cm">Also exploited by tumor cells to drive their own vascularization</div>
+    <div class="ci">Chronic mountain sickness (Monge's disease)</div>
+    <div class="cd">Chronic altitude → polycythemia (sustained EPO → ↑viscosity → thrombosis + pulmonary hypertension)</div>
+    <div class="ci">Sleep apnea (intermittent hypoxia)</div>
+    <div class="cd">Repeated HIF-1α activation cycles at sea level → chronic cardiovascular consequences identical to altitude mechanisms</div>
+    <div class="ci">Hyperbaric oxygen</div>
+    <div class="cd">High pressure: O2 toxicity via ROS; therapeutic applications: wound healing, CO poisoning reversal, decompression sickness, radiation injury repair</div>
+  </div>
+</div>
+
+<div class="cc">
+  <div class="ch phh"><span class="cl phl">F</span><span class="cn">Physical Forces (Mechanical)</span></div>
+  <div class="cb">
+    <div class="ci">Vibration</div>
+    <div class="cd">Whole-body (heavy vehicle drivers) → low back pain, intervertebral disc degeneration (disrupts proteoglycan synthesis, accelerates disc cell apoptosis)</div>
+    <div class="cd">Hand-arm vibration (power tools) → vibration white finger / Raynaud's → vascular spasm + peripheral nerve damage</div>
+    <div class="ci">Mechanical trauma / injury</div>
+    <div class="cd">Cell damage → DAMP release (HMGB1, ATP, uric acid) → TLR + inflammasome activation → IL-1β, IL-18, TNF-α; coagulation cascade; TGF-β / fibroblast-mediated tissue remodeling</div>
+    <div class="ci">Repetitive concussive trauma</div>
+    <div class="cd">Contact sports, blast injury → CTE (chronic traumatic encephalopathy): tau protein accumulation, neuroinflammation, progressive brain atrophy</div>
+    <div class="cm">DAMP-mediated sterile inflammation; progressive neurodegeneration from repeated sub-threshold injury accumulation</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const bar = document.querySelector('.tab-bar');
+  const btns = document.querySelectorAll('.tab-btn');
+  const sections = document.querySelectorAll('.ds');
+  bar.style.display = 'flex';
+  sections.forEach((s, i) => { if (i > 0) s.style.display = 'none'; });
+  btns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      btns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const t = this.dataset.target;
+      sections.forEach(s => { s.style.display = s.dataset.domain === t ? 'block' : 'none'; });
+    });
+  });
+});
+</script>
